@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff0000">
+
+        <ImageView
+            android:layout_width="45.0dip"
+            android:layout_height="45.0dip"
+            android:id="@+id/titlecity"
+            android:src="@drawable/title_city"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="北京天气"
+            android:textSize="25dp"
+            android:paddingLeft="10dp"
+            android:textColor="#ffffff"
+            android:layout_marginTop="7sp"
+            android:layout_toRightOf="@+id/titlecity"
+            android:background="@drawable/textview_border" />
+        <ImageView
+            android:layout_width="45.0dip"
+            android:layout_height="45.0dip"
+            android:id="@+id/refresh"
+            android:src="@drawable/title_update"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:focusable="true"/>
+        <ImageView
+            android:layout_width="45.0dip"
+            android:layout_height="45.0dip"
+            android:layout_toLeftOf="@+id/refresh"
+            android:id="@+id/share"
+            android:src="@drawable/title_share"/>
+        <ImageView
+            android:layout_width="45.0dip"
+            android:layout_height="45.0dip"
+            android:id="@+id/address"
+            android:src="@drawable/base_action_bar_action_city"
+            android:layout_toLeftOf="@+id/share"/>
+    </RelativeLayout>
+
+</RelativeLayout>
