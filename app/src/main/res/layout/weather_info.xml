@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:text="北京天气"
             android:textSize="25dp"
+            android:id="@+id/title_city_name"
             android:paddingLeft="10dp"
             android:textColor="#ffffff"
             android:layout_marginTop="7sp"
@@ -72,13 +73,13 @@
             android:textColor="#ffffff"
             android:layout_marginLeft="15.0dip"
             android:singleLine="true"
-            android:id="@+id/place"/>
+            android:id="@+id/city_name"/>
         <!--发布时间-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/place"
+            android:layout_below="@+id/city_name"
             android:id="@+id/time"
             android:text="今天18:25发布"
             android:textColor="#ffffff"
@@ -133,7 +134,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/PM_name"
+                        android:id="@+id/PM"
                         android:text="PM2.5"
                         android:textColor="#ffffff"
                         android:textSize="12.0sp"
@@ -142,7 +143,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/PM_number"
+                        android:id="@+id/PM_name"
                         android:layout_below="@+id/PM_name"
                         android:text="220"
                         android:textSize="30sp"
@@ -150,17 +151,18 @@
                 </LinearLayout>
                 <!--PM2.5图片-->
                 <ImageView
-                    android:id="@+id/picture"
+                    android:id="@+id/PM_imag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5.0dip"
-                    android:layout_toRightOf="@+id/PM_number"
+                    android:layout_toRightOf="@+id/PM_quantity"
                     android:src="@drawable/biz_plugin_weather_0_50" />
             </LinearLayout>
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="重度污染"
+                android:id="@+id/PM_quantity"
                 android:gravity="center"
                 android:textSize="20.0sp"
                 android:textColor="#ffffff"/>
