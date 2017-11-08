@@ -104,6 +104,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         //单击返回键
         if(view.getId() == R.id.titlecity){
             Intent i = new Intent(this,SelectCity.class);
+            i.putExtra("cityName","北京");
             //startActivity(i);
             startActivityForResult(i,1);
         }
