@@ -14,7 +14,8 @@
             android:layout_width="45.0dip"
             android:layout_height="45.0dip"
             android:id="@+id/titlecity"
-            android:src="@drawable/title_city"/>
+            android:src="@drawable/title_city"
+            android:layout_alignParentTop="true" />
 
         <TextView
             android:layout_width="wrap_content"

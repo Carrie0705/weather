@@ -2,6 +2,7 @@ package com.example.carrie0705.myapplication;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,9 +31,10 @@ import java.net.URL;
 public class MainActivity extends Activity implements View.OnClickListener{
     private static final int UPDATE_TODAY_WEATHER = 1;
     private ImageView mUpdateBtn;
+    private ImageView mCitySelect;
 
     private TextView cityTv,timeTv,humidityTv,weekTv,pmDataTv,pmQualityTv,
-            temperatureTv,climateTv,windTv,city_name_Tv;
+            temperatureTv,climateTv,windTv,city_name_Tv,wendu_Tv;
     private ImageView weatherImp,pmImg;
 
     private Handler mHandler = new Handler(){
@@ -63,6 +65,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
             Toast.makeText(MainActivity.this,"网络堵塞，请检查网络连接是否完好！",Toast.LENGTH_LONG).show();
         }
 
+        mCitySelect = (ImageView) findViewById(R.id.titlecity);
+        mCitySelect.setOnClickListener(this);
         initView();
     }
 
@@ -79,6 +83,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         climateTv = (TextView) findViewById(R.id.climate);
         windTv = (TextView) findViewById(R.id.wind);
         weatherImp = (ImageView) findViewById(R.id.weather_image);
+        wendu_Tv = (TextView) findViewById(R.id.wendu);
 
         city_name_Tv.setText("N/A");
         cityTv.setText("N/A");
@@ -90,10 +95,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
         temperatureTv.setText("N/A");
         climateTv.setText("N/A");
         windTv.setText("N/A");
+        wendu_Tv.setText("N/A");
+
     }
 
 
     public void onClick(View view){
+        //单击返回键
+        if(view.getId() == R.id.titlecity){
+            Intent i = new Intent(this,SelectCity.class);
+            //startActivity(i);
+            startActivityForResult(i,1);
+        }
+        //单击刷新键
         if(view.getId() == R.id.refresh){
             SharedPreferences sharedPreferences = getSharedPreferences("congig",MODE_PRIVATE);
             String cityCode = sharedPreferences.getString("main_city_code","101010100");
@@ -109,6 +123,20 @@ public class MainActivity extends Activity implements View.OnClickListener{
         }
     }
 
+    protected void onActivityResult(int requestCode, int resultCode,Intent data){
+        if(requestCode == 1 && resultCode == RESULT_OK){
+            String newCityCode = data.getStringExtra("cityCode");
+            Log.d("myWeather","选择的城市代码为"+newCityCode);
+
+            if(NetUtil.getNetworkState(this)!=NetUtil.NETWORN_NONE){
+                Log.d("myWeather","网络畅通");
+                queryWeatherCode(newCityCode);
+            }else{
+                Log.d("myWeather","网络堵塞，请检查网络连接是否完好！");
+                Toast.makeText(MainActivity.this,"网络堵塞，请检查网络连接是否完好！",Toast.LENGTH_LONG).show();
+            }
+        }
+    }
     private void queryWeatherCode(String citycode){
         final String address = "http://wthrcdn.etouch.cn/WeatherApi?citykey="+citycode;
         Log.d("myWeather",address);
@@ -249,20 +277,25 @@ public class MainActivity extends Activity implements View.OnClickListener{
         temperatureTv.setText(todayWeather.getHigh()+"~"+todayWeather.getLow());
         climateTv.setText(todayWeather.getType());
         windTv.setText("风力:"+todayWeather.getFengli());
+        wendu_Tv.setText("温度:"+todayWeather.getWendu()+"℃");
 
-        int pm = Integer.parseInt(todayWeather.getPm25());
-        if(pm<=50&&pm>=0){
+        if(todayWeather.getPm25()== null){
             pmImg.setImageResource(R.drawable.biz_plugin_weather_0_50);
-        }else if(pm>50&&pm<=100){
-            pmImg.setImageResource(R.drawable.biz_plugin_weather_51_100);
-        }else if(pm>100&&pm<=150){
-            pmImg.setImageResource(R.drawable.biz_plugin_weather_101_150);
-        }else if(pm>150&&pm<=200){
-            pmImg.setImageResource(R.drawable.biz_plugin_weather_151_200);
-        }else if(pm>200&&pm<=300){
-            pmImg.setImageResource(R.drawable.biz_plugin_weather_201_300);
-        }else{
-            pmImg.setImageResource(R.drawable.biz_plugin_weather_greater_300);
+        }else {
+            int pm = Integer.parseInt(todayWeather.getPm25());
+            if (pm <= 50 && pm >= 0) {
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_0_50);
+            } else if (pm > 50 && pm <= 100) {
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_51_100);
+            } else if (pm > 100 && pm <= 150) {
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_101_150);
+            } else if (pm > 150 && pm <= 200) {
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_151_200);
+            } else if (pm > 200 && pm <= 300) {
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_201_300);
+            } else {
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_greater_300);
+            }
         }
 
         switch(todayWeather.getType()){
@@ -330,4 +363,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         Toast.makeText(MainActivity.this,"更新成功！",Toast.LENGTH_SHORT).show();
     }
+
+
+
 }
