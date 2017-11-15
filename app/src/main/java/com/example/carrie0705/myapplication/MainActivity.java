@@ -69,7 +69,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         mCitySelect.setOnClickListener(this);
         initView();
     }
-
+//刚进入应用程序的时候,对页面中的元素进行初始化,值都赋为N/A
     void initView(){
         city_name_Tv=(TextView) findViewById((R.id.title_city_name));
         cityTv = (TextView) findViewById(R.id.city_name);
@@ -123,7 +123,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             }
         }
     }
-
+//判断网络是否连接
     protected void onActivityResult(int requestCode, int resultCode,Intent data){
         if(requestCode == 1 && resultCode == RESULT_OK){
             String newCityCode = data.getStringExtra("cityCode");
@@ -138,6 +138,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             }
         }
     }
+    //创建一个新的线程,用于获取接口中的信息并调用函数进行解析
     private void queryWeatherCode(String citycode){
         final String address = "http://wthrcdn.etouch.cn/WeatherApi?citykey="+citycode;
         Log.d("myWeather",address);
@@ -181,7 +182,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             }
         }).start();
     }
-
+//解析xml
     private TodayWeather parseXML(String xmldata){
         TodayWeather todayWeather = null;
         int fengxiangCount=0;
@@ -266,7 +267,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         return todayWeather;
     }
 
-
+//将解析到的数据,显示在页面中
     void updateTodayWeather(TodayWeather todayWeather){
         city_name_Tv.setText(todayWeather.getCity()+"天气");
         cityTv.setText(todayWeather.getCity());

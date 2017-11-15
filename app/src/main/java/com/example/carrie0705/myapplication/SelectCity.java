@@ -52,7 +52,7 @@ public class SelectCity extends Activity implements View.OnClickListener{
         mTextView.setText("当前城市:北京");
     }
 
-
+//单击返回按钮
     public void onClick(View v){
         switch(v.getId()){
             case R.id.title_back:
@@ -65,7 +65,7 @@ public class SelectCity extends Activity implements View.OnClickListener{
                 break;
         }
     }
-
+//listview列表显示以及单击返回
     public void initViews(){
         mlistView = (ListView)findViewById(R.id.select_city);
         MyApplication myApplication = (MyApplication) getApplication();

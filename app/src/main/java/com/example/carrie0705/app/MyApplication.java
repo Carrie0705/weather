@@ -45,7 +45,7 @@ public class MyApplication extends Application {
             }
         }).start();
     }
-
+//把数据库中的内容复制到mCityList中
     private boolean prepareCityList(){
         mCityList = mcityDB.getAllCity();
         int i=0;
@@ -66,7 +66,7 @@ public class MyApplication extends Application {
     public static MyApplication getInstance(){
         return mApplication;
     }
-
+//第一次进来时,会将数据库复制进去
     private CityDB openCityDB(){
         String path = "/data"
                 + Environment.getDataDirectory().getAbsolutePath()
