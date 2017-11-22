@@ -104,13 +104,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
         //单击返回键
         if(view.getId() == R.id.titlecity){
             Intent i = new Intent(this,SelectCity.class);
-            i.putExtra("cityName","北京");
+            //i.putExtra("cityName","北京");
             //startActivity(i);
             startActivityForResult(i,1);
         }
         //单击刷新键
         if(view.getId() == R.id.refresh){
-            SharedPreferences sharedPreferences = getSharedPreferences("congig",MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("config",MODE_PRIVATE);
             String cityCode = sharedPreferences.getString("main_city_code","101010100");
             //北京 101010100   兰州 101160101
             Log.d("myWeather",cityCode);
