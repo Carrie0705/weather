@@ -17,7 +17,6 @@
             android:textColor="#ffffffff"
             android:textSize="20.0dip"/>
 
-
         <ImageView
             android:layout_width="45.0dip"
             android:layout_height="45.0dip"
@@ -35,8 +34,8 @@
             android:background="#A71717"
             android:gravity="center"/>
 
-
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,8 +72,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/select_city"
             android:background="@android:color/white">
-
         </ListView>
+
     </RelativeLayout>
 
 </RelativeLayout>

@@ -15,7 +15,7 @@
             android:layout_height="45.0dip"
             android:id="@+id/titlecity"
             android:src="@drawable/title_city"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,9 +51,9 @@
         </RelativeLayout>
 
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/title_of_all"
         android:background="@drawable/biz_plugin_weather_shenzhen_bg"
         android:orientation="vertical">
@@ -85,7 +85,7 @@
             android:text="今天18:25发布"
             android:textColor="#ffffff"
             android:textSize="15.0sp"
-            android:layout_marginTop="5.0dip"
+            android:layout_marginTop="10.0dip"
             android:layout_marginLeft="15.0dip"/>
         <!--湿度信息-->
         <TextView
@@ -174,7 +174,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/humidity"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="5.0dip">
+                android:layout_marginTop="30.0dip">
                 <!--天气图片 -->
                 <ImageView
                     android:layout_width="wrap_content"
@@ -189,6 +189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="5dip"
+                    android:layout_marginTop="20dip"
                     android:layout_toRightOf="@id/weather_image"
                     android:singleLine="true"
                     android:text="今天 星期三"
@@ -232,5 +233,34 @@
                     android:textSize="20.0sp" />
             </RelativeLayout>
         </RelativeLayout>
-    </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/weather_today"
+            android:id="@+id/viewpager"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/indicator"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/black">
+            <ImageView
+                android:id="@+id/iv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/page_indicator_focused"
+                android:padding="5dp"/>
+            <ImageView
+                android:id="@+id/iv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/page_indicator_unfocused"
+                android:padding="5dp"/>
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
+

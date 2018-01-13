@@ -48,17 +48,22 @@ public class SelectCity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_city);
         mClearEditText = (EditText) findViewById(R.id.search_edit);
+        MyApplication myApplication = (MyApplication) getApplication();
+        mCityList = myApplication.getCityList();
+
+
+        Intent intent = this.getIntent();
+        String cityName = intent.getStringExtra("cityName");
+
+        Log.d("myWeather",cityName);
+        mTextView = (TextView)findViewById(R.id.title_name);
+        mTextView.setText("当前城市： "+ cityName);
 
         initViews();
-        initSearch();
+        //initSearch();
+
         mBackBtn = (ImageView) findViewById(R.id.title_back);
         mBackBtn.setOnClickListener(this);
-
-
-        //Intent intent = this.getIntent();
-        //String citycode = intent.getStringExtra("cityCode");
-
-        //mTextView.setText("当前城市:北京");
     }
 
 //单击返回按钮
@@ -76,12 +81,11 @@ public class SelectCity extends Activity implements View.OnClickListener{
                 break;
         }
     }
+
+
 //listview列表显示以及单击返回
     public void initViews(){
         mlistView = (ListView)findViewById(R.id.select_city);
-
-        MyApplication myApplication = (MyApplication) getApplication();
-        mCityList = myApplication.getCityList();
         int i=0;
         for(City city : mCityList){
             data[i] = city.getCity();
@@ -89,17 +93,69 @@ public class SelectCity extends Activity implements View.OnClickListener{
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(SelectCity.this,android.R.layout.simple_list_item_1,data);
         mlistView.setAdapter(adapter);
-        Log.d("myWeather","adapter");
+
         mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?>adapterView,View view,int i,long I){
+                Log.d("myWeather",i+"");
                 Intent intent = new Intent();
+
                 City city = mCityList.get(i);
                 Log.d("myWeather",city.getNumber());
+
+                SharedPreferences sharedPreferences = getSharedPreferences("config",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("main_city_code",city.getNumber());
+                editor.commit();
+
                 intent.putExtra("cityCode",city.getNumber());
                 setResult(RESULT_OK,intent);
                 finish();
             }
         });
+
+        mClearEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterData(s.toString());
+                ArrayAdapter<String> adapterForSearch = new ArrayAdapter<String>(SelectCity.this,android.R.layout.simple_list_item_1,data1);
+                mlistView.setAdapter(adapterForSearch);
+
+                mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                    public void onItemClick(AdapterView<?>adapterView,View view,int i,long I){
+                        Log.d("myWeather",i+"");
+                        Intent intent = new Intent();
+                        int j;
+                        for (j = 0; j < data.length; j++) {
+                            if (data[j] == data1[i]) {
+                                i = j;
+                                break;
+                            }
+                        }
+                        if(j==data.length&&data[j]!=data1[j]){
+                            Toast.makeText(SelectCity.this, "未查询到所输城市", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        City city = mCityList.get(i);
+                        Log.d("myWeather",city.getNumber());
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("config",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("main_city_code",city.getNumber());
+                        editor.commit();
+
+                        intent.putExtra("cityCode",city.getNumber());
+                        setResult(RESULT_OK,intent);
+                        finish();
+                    }
+                });
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
     }
 
     private void filterData(String filterStr){
@@ -133,35 +189,5 @@ public class SelectCity extends Activity implements View.OnClickListener{
             }
         }
     }
-    public void initSearch(){
-        mClearEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterData(s.toString());
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(SelectCity.this,android.R.layout.simple_list_item_1,data1);
-                mlistView.setAdapter(adapter);
-            }
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
 
-        mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long I) {
-                    Intent intent = new Intent();
-                    for (int j = 0; j < data.length; j++) {
-                        if (data[j] == data1[i]) {
-                            i = j;
-                            break;
-                        }
-                    }
-                    City city = mCityList.get(i);
-                    Log.d("myWeather", city.getNumber());
-                    intent.putExtra("cityCode", city.getNumber());
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
-            });
-    }
 }
